@@ -1,0 +1,11 @@
+@csrf
+<div class="grid gap-5 md:grid-cols-2">
+    <div class="md:col-span-2"><x-input-label for="title" value="Event title" /><x-text-input id="title" name="title" class="mt-1 block w-full" value="{{ old('title', $event->title ?? '') }}" required /><x-input-error :messages="$errors->get('title')" class="mt-2" /></div>
+    <div><x-input-label for="location" value="Location" /><x-text-input id="location" name="location" class="mt-1 block w-full" value="{{ old('location', $event->location ?? '') }}" required /></div>
+    <div><x-input-label for="capacity" value="Capacity (optional)" /><x-text-input id="capacity" name="capacity" type="number" min="1" class="mt-1 block w-full" value="{{ old('capacity', $event->capacity ?? '') }}" /></div>
+    <div><x-input-label for="starts_at" value="Starts" /><x-text-input id="starts_at" name="starts_at" type="datetime-local" class="mt-1 block w-full" value="{{ old('starts_at', isset($event) ? $event->starts_at->format('Y-m-d\\TH:i') : '') }}" required /></div>
+    <div><x-input-label for="ends_at" value="Ends" /><x-text-input id="ends_at" name="ends_at" type="datetime-local" class="mt-1 block w-full" value="{{ old('ends_at', isset($event) ? $event->ends_at->format('Y-m-d\\TH:i') : '') }}" required /></div>
+    <div><x-input-label for="status" value="Status" /><select id="status" name="status" class="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-teal-500 focus:ring-teal-500"><option>Draft</option><option @selected(old('status', $event->status ?? '') === 'Published')>Published</option><option @selected(old('status', $event->status ?? '') === 'Closed')>Closed</option></select></div>
+    <div class="md:col-span-2"><x-input-label for="description" value="Description" /><textarea id="description" name="description" rows="5" class="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-teal-500 focus:ring-teal-500" required>{{ old('description', $event->description ?? '') }}</textarea></div>
+</div>
+<div class="mt-6 flex justify-end gap-3"><a class="rounded-xl border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700" href="{{ route('events.index') }}">Cancel</a><x-primary-button>{{ $submitLabel }}</x-primary-button></div>
